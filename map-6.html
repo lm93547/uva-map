@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Demo</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="description" content="Demo Project" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="node_modules/leaflet-toolbar/dist/leaflet.toolbar.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-distortableimage@0.21.7/dist/vendor.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-distortableimage@0.21.7/dist/leaflet.distortableimage.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+
+    <script src="https://unpkg.com/leaflet-distortableimage@0.21.7/dist/vendor.js"></script>
+
+    <script src="https://unpkg.com/leaflet-distortableimage@0.21.7/dist/leaflet.distortableimage.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <style type="text/css">
+        html,
+        body {
+            height: 100%;
+        }
+
+        #map {
+            height: 100%;
+        }
+
+        #holder {
+            height: 50%; 
+            width: 50%;
+            transform: translate(50%);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="holder">
+    <input class="custom-range" type="range" id="sliderOpacity" min="0" max="1" step="0.1" value="0.5" />
+    <button id="reset"> reset </button>
+    <div id="map"></div>
+    </div>
+    <script type="text/javascript">
+        var map;
+        (function () {
+            // center of the map
+            var center = [-1.080665, 102.837307];
+
+            // Create the map
+            var map = L.map("map").setView(center, 5);
+
+            // Set up the OSM layer
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                attribution:
+                    'Data © <a href="http://osm.org/copyright">OpenStreetMap</a>',
+                maxZoom: 18,
+            }).addTo(map);
+
+            // add a marker in the given location
+            L.marker([-0.573574, 100.097319]).addTo(map);
+            L.marker([-3.204581, 105.190921]).addTo(map);
+
+            var imageUrl =
+                "https://i.ibb.co/qY6j2Q8/105-15-02-04-03-2004-14-39-8-C-8856x13662-2198-1432-150-UBAkleur-1-50-s-R98-0-G57-6-B54-7.jpg?fbclid=IwAR2H4GFMEADnyX1EUkwpWwh8i9CDg3H2KAmhjdHTGqRVUZDZBpJeuzO_VjU",
+                imageBounds = [
+                    [-0.573574, 100.097319],
+                    [-3.204581, 105.190921],
+                ];
+            var image = L.imageOverlay(imageUrl, imageBounds);
+            //image.addTo(map);
+            //image.bringToFront();
+            var img;
+            if (map) {
+                img = L.distortableImageOverlay(
+                    "https://i.ibb.co/5k2m1Hp/105-15-02-04-03-2004-14-39-8-C-8856x13662-2198-1432-150-UBAkleur-1-50-s-R98-0-G57-6-B54-7.jpg",
+                    {
+                        selected: true,
+                        fullResolutionSrc: "large.jpg",
+                        editable: true,
+                        corners: [
+                            L.latLng(-0.573574, 100.097319),
+                            L.latLng(-0.638663, 105.203879),
+                            L.latLng(-3.784750, 100.790124),
+                            L.latLng(-3.204581, 105.190921),
+                        ],
+                    }
+                ).addTo(map);
+            }
+
+            // event handeler for the slider
+            $("#sliderOpacity").on("change", function () {
+                $("#image-opactiy").html(this.value); // when the slider changes the text changes, chained the functions
+                img.setOpacity(this.value); // using the leaflet image control setOpacity method which uses the slider dom as a argument
+            });
+            // event handeler for the slider
+            $("#reset").on("click", function () {
+               
+                if (map) {
+                map.removeLayer(img)
+                img = L.distortableImageOverlay(
+                    "https://i.ibb.co/5k2m1Hp/105-15-02-04-03-2004-14-39-8-C-8856x13662-2198-1432-150-UBAkleur-1-50-s-R98-0-G57-6-B54-7.jpg",
+                    {
+                        selected: true,
+                        fullResolutionSrc: "large.jpg",
+                        editable: true,
+                        corners: [
+                            L.latLng(-0.573574, 100.097319),
+                            L.latLng(-0.638663, 105.203879),
+                            L.latLng(-3.784750, 100.790124),
+                            L.latLng(-3.204581, 105.190921),
+                        ],
+                    }
+                ).addTo(map);
+            }
+            });
+        })();
+    </script>
+</body>
+
+</html>
