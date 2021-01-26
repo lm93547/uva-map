@@ -103,6 +103,12 @@
                 $("#image-opactiy").html(this.value); // when the slider changes the text changes, chained the functions
                 img.setOpacity(this.value); // using the leaflet image control setOpacity method which uses the slider dom as a argument
             });
+            $("#reset").on("click", function (){
+                if(map){
+                    map.setOpacity(1)
+}
+}
+)
             // event handeler for the slider
             $("#reset").on("click", function () {
                 if (map) {
