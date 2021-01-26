@@ -29,12 +29,23 @@
         #map {
             height: 100%;
         }
+
+        .align-margin {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
     </style>
 </head>
 
 <body>
-    <input class="custom-range" type="range" id="sliderOpacity" min="0" max="1" step="0.1" value="0.5" />
-    <button id="reset"> reset </button>
+    <div class='align-margin'>
+        Image Opacity
+        <input class="custom-range" type="range" id="sliderOpacity" min="0" max="1" step="0.1" value="0.5" />
+    </div>
+    <div class="align-margin">
+        <button id="reset">Reset Image</button>
+        <button id="center">Center View</button>
+    </div>
     <div id="map"></div>
     <script type="text/javascript">
         var map;
@@ -90,7 +101,6 @@
             });
             // event handeler for the slider
             $("#reset").on("click", function () {
-               
                 if (map) {
                 map.removeLayer(img)
                 img = L.distortableImageOverlay(
@@ -109,6 +119,12 @@
                 ).addTo(map);
             }
             });
+
+            $("#center").on("click", function (){
+                if(map){
+                    map.setView([-1.080665, 102.837307])
+                }
+            })
         })();
     </script>
 </body>
