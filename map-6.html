@@ -104,12 +104,6 @@
                 img.setOpacity(this.value); // using the leaflet image control setOpacity method which uses the slider dom as a argument
             });
             // event handeler for the slider
-            $("#reset").on("click", function (){
-                if(map){
-                    map.setOpacity(1)
-}
-}
-)
             $("#reset").on("click", function () {
                 if (map) {
                 map.removeLayer(img)
